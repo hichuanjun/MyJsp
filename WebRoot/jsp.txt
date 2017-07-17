@@ -1,0 +1,98 @@
+安装步骤
+一、安装tomcat Windonw->preferences->myElclipse->servers->tomcat版本
+二、关闭默认tomcat，启用自定义tomcat
+三、Windonw->show views ->servers
+
+项目启动步骤
+一、创建web项目 new ->web project
+二、将项目加入tomcat中 右键点击tomcat ->add Deploment
+三、启动tomcat
+四、输入localhost:端口号（默认为8080）/项目url[/目标文件所在目录]/jsp文件名
+
+
+JSP文件创建
+一、jsp文件要位于WebRoot文件夹下
+二、使用basic模板创建即可
+
+
+
+内置对象---->由web容器（tomcat,jboss等）创建好的对象，使用时直接使用，不用手动创建
+9种内置对象 4种作用域
+
+1.request ---->请求对象
+form表单提交  
+有name属性的元素都会被封装到request对象中
+
+常用方法
+request.getParameter("deptno"); ---->获取请求页面提交的元素的单个值（第一个）
+request.getParameterValues("enjoy");---->获取请求页面提交的同名元素的集合值，返回值为String数组
+
+request.setCharacterEncoding("UTF-8") --->改变request对象的编码格式 
+form表单内容只对method ="post"有效
+
+UTF-8 国际码 支持中文
+GBK  国标码  支持中文
+ISO-8859-1 不支持中文 是JSP页面的默认编码（传参也使用此编码）
+
+
+request.setAttribute("deptno",1010); --->将request对象当成map集合使用,将1010起名为deptno放入request
+request.getAttribute("deptno");--->将存放在request中的deptno对应的值取出
+以上如取出的值为 常量null
+1.deptno对应的值就为null
+2.没有在request中放入名为“deptno”的变量
+
+JSTL表达式语言${}
+如放入的是String或八种基本数据类型（包装类）
+${param.deptno}---->等同于request.getParameter("deptno");
+${deptno}---->等同于request.getAttribute("deptno");
+如值为null则不显示
+
+如放入的是引用数据类型 如dept
+1.Dept类中属性必须有get和set方法
+request.setAttribute("dept",new Dept(11,"sals","nanj"));
+使用EL表达式取出 ${dept.deptno}-->((Dept)request.getAttribute("dept")).getDeptno();
+
+
+2.response	---->	响应对象
+客户端发起请求后，服务器收到请求， 返回一个响应对象（包含客户请求的资源）
+
+常用方法
+重定向：重定向不带任何状态，改变地址栏为目标页面
+response.sendRedirect("C.jsp"); 
+
+请求转发：携带本次请求状态去跳转页面，不改变地址栏
+request.getRequestDispatcher("C.jsp").forward(request,response);
+
+
+3.session ------>会话对象（浏览器不关一直存在）
+session.getId()------>用来获取用户连接连接的代码
+
+session.setAttribute("dept",dept);
+session.getAttribute("dept");
+以上方法经常用来做页面间非字符串对象的传输
+
+
+4.
+
+
+
+	pageEncoding="GBK" 编写此JSP文件时的编码
+
+ 	page language="java" contentType="text/html; charset=GBK"
+ 	 翻译成JAVA文件时的编码
+
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+	显示在浏览器时的编码格式
+	
+	最通用的编码UTF-8(utf-8)
+	中文编码：GBK,GB2312，GB18030
+	国际编码：ISO-8859-1(iso_8859_1)
+	大五码:BIG5
+
+
+
+
+
+
+
+
